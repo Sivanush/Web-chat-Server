@@ -12,9 +12,7 @@ import { AuthGuard } from './guards/guards.guard';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
+    ConfigModule.forRoot({isGlobal: true}),
     MongooseModule.forRoot(process.env.MONGODB_URI),
     ChatModule, AuthModule],
   controllers: [AppController],

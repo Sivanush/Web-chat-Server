@@ -11,6 +11,7 @@ import { AuthGuard } from 'src/guards/guards.guard';
 export class UserController {
 
     constructor(private readonly userService: UserService) {}
+
     @Post('auth')
     async userAuthentication(@Body() userData:CreateUserDto){
         return this.userService.userAuthentication(userData)
@@ -42,14 +43,18 @@ export class UserController {
     }
 
 
-
-
     @UseGuards(AuthGuard)
     @Post('request')
     async acceptOrRejectRequest(@Body() data:acceptOrRejectDto){
         return this.userService.acceptAndRejectUserRequest(data.requestId, data.status)
     }
 
+
+    @UseGuards(AuthGuard)
+    @Get('connections')
+    async getAllConnections(@Req() req:Request){
+        return this.userService.getAllConnections(req.user.userId)
+    }
 
 
 }

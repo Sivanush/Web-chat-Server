@@ -129,4 +129,8 @@ export class UserService {
             userId: userId
         }).populate('connections')
     }
+
+    async getUserData(userId: string){
+        return await this.userModel.findById(userId).populate('username image email')
+    }
 }

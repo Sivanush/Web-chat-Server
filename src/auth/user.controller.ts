@@ -1,11 +1,12 @@
 import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 
-import { SearchUsersDto } from './dto/seachUsers.Dts';
+import { SearchUsersDto } from './dto/searchUsers.Dts';
 import { SendRequestDto } from './dto/sendRequest.Dto';
 import { UserService } from './user.service';
 import { acceptOrRejectDto } from './dto/acceptOrRejectDto';
 import { AuthGuard } from 'src/guards/guards.guard';
+import { GetUserDataDto } from './dto/getUserDataDto';
 
 @Controller('user')
 export class UserController {
@@ -54,6 +55,12 @@ export class UserController {
     @Get('connections')
     async getAllConnections(@Req() req:Request){
         return this.userService.getAllConnections(req.user.userId)
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('user-data/:userId')
+    async getUserData(@Param() param:GetUserDataDto){
+        return this.userService.getUserData(param.userId)
     }
 
 

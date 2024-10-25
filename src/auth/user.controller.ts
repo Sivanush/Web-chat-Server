@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { acceptOrRejectDto } from './dto/acceptOrRejectDto';
 import { AuthGuard } from 'src/guards/guards.guard';
 import { GetUserDataDto } from './dto/getUserDataDto';
+import { CustomRequest } from 'src/types/express-request.interface';
 
 @Controller('user')
 export class UserController {
@@ -20,26 +21,26 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get('s/:input')
-    async searchUsers(@Param() params:SearchUsersDto, @Req() req:Request){
+    async searchUsers(@Param() params:SearchUsersDto, @Req() req:CustomRequest){
         return this.userService.searchUser(params.input,req.user.userId)
     }
 
 
     @UseGuards(AuthGuard)
     @Get('send/:receiver')
-    async sendUserRequest(@Param() params:SendRequestDto, @Req() req:Request){
+    async sendUserRequest(@Param() params:SendRequestDto, @Req() req:CustomRequest){
         return this.userService.sendUserRequest(req.user.userId, params.receiver)
     }
 
     @UseGuards(AuthGuard)
     @Get('get-requests')
-    async getRequests(@Req() req:Request){
+    async getRequests(@Req() req:CustomRequest){
         return this.userService.getRequests(req.user.userId)
     }
 
     @UseGuards(AuthGuard)
     @Get('get-send-requests')
-    async getSendRequests(@Req() req:Request){
+    async getSendRequests(@Req() req:CustomRequest){
         return this.userService.getSendRequests(req.user.userId)
     }
 
@@ -53,7 +54,7 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get('connections')
-    async getAllConnections(@Req() req:Request){
+    async getAllConnections(@Req() req:CustomRequest){
         return this.userService.getAllConnections(req.user.userId)
     }
 

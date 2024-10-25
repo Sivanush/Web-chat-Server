@@ -6,6 +6,7 @@ import { AuthGuard } from 'src/guards/guards.guard';
 import { SearchDto } from './dto/search.dto';
 import { JoinGroupDto } from './dto/Join-group.dto';
 import { GetGroupData } from './dto/get-group-data.dto';
+import { CustomRequest } from 'src/types/express-request.interface';
 
 @UseGuards(AuthGuard)
 @Controller('group-chat')
@@ -13,7 +14,7 @@ export class GroupChatController {
   constructor(private readonly groupChatService: GroupChatService) { }
 
   @Post('create')
-  create(@Body() createGroupChatDto: CreateGroupChatDto, @Req() req: Request) {
+  create(@Body() createGroupChatDto: CreateGroupChatDto, @Req() req: CustomRequest) {
     return this.groupChatService.create(createGroupChatDto, req.user.userId);
   }
 
@@ -24,12 +25,12 @@ export class GroupChatController {
   }
 
   @Get('join/:groupId')
-  joinGroup(@Param() param: JoinGroupDto, @Req() req: Request) {
+  joinGroup(@Param() param: JoinGroupDto, @Req() req: CustomRequest) {
     this.groupChatService.joinGroup(param.groupId, req.user.userId)
   }
 
   @Get('my-group')
-  getMyGroups(@Req() req: Request) {
+  getMyGroups(@Req() req: CustomRequest) {
     return this.groupChatService.getMyGroups(req.user.userId)
   }
 

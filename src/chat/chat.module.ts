@@ -11,4 +11,6 @@ import { User, userModal } from 'src/auth/model/user.schema';
   ],
   providers: [ChatGateway]
 })
-export class ChatModule {}
+export class ChatModule {
+  
+}

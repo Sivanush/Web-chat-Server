@@ -4,9 +4,11 @@ import { Server, Socket } from 'socket.io';
 import { Chat } from './model/chat.schema';
 import { Model } from 'mongoose';
 
+require('dotenv').config();
+
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:4200',
+    origin: process.env.CLIENT_DOMAIN ,
   }
 })
 
@@ -22,7 +24,8 @@ export class ChatGateway {
 
   @SubscribeMessage('joinChat')
   handleJoinChat(@MessageBody() userId:string, @ConnectedSocket() client: Socket){
-    client.join(userId)
+    client.join(userId)    
+    console.log(process.env.CLIENT_DOMAIN)
     this.userStatus.set(userId, 'online')
     this.broadcastUserStatus(userId, 'online');
   }

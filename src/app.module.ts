@@ -14,10 +14,10 @@ import { GroupChatModule } from './group-chat/group-chat.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGODB_URI),
     ChatModule, AuthModule, GroupChatModule],
   controllers: [AppController],
-  providers: [AppService,AuthGuard],
+  providers: [AppService, AuthGuard],
 })
-export class AppModule {}
+export class AppModule { }

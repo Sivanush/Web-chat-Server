@@ -1,9 +1,9 @@
 import { ConflictException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateGroupChatDto } from './dto/create-group-chat.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Group } from './model/group.schema';
 import { Model } from 'mongoose';
 import { GroupMember } from './model/members.schema';
+import { Group } from './model/group.schema';
 
 @Injectable()
 export class GroupChatService {
@@ -84,9 +84,19 @@ export class GroupChatService {
         .populate('groupId')
         .exec();
       const groups = groupMemberships.map(member => member.groupId);
+
       return groups;
     } catch (error) {
       throw new HttpException(`Get Group failed: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+
+  async getGroupData(groupId: string) {
+    try {
+      return this.groupModel.findById(groupId)
+    } catch (error) {
+      throw new HttpException(`Get Group Data failed: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

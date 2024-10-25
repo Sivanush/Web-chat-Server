@@ -5,6 +5,7 @@ import { UpdateGroupChatDto } from './dto/update-group-chat.dto';
 import { AuthGuard } from 'src/guards/guards.guard';
 import { SearchDto } from './dto/search.dto';
 import { JoinGroupDto } from './dto/Join-group.dto';
+import { GetGroupData } from './dto/get-group-data.dto';
 
 @UseGuards(AuthGuard)
 @Controller('group-chat')
@@ -30,5 +31,10 @@ export class GroupChatController {
   @Get('my-group')
   getMyGroups(@Req() req: Request) {
     return this.groupChatService.getMyGroups(req.user.userId)
+  }
+
+  @Get(':groupId')
+  getGroupData(@Param() param: GetGroupData){
+    return this.groupChatService.getGroupData(param.groupId)
   }
 }

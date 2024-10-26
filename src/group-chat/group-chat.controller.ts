@@ -26,7 +26,7 @@ export class GroupChatController {
 
   @Get('join/:groupId')
   joinGroup(@Param() param: JoinGroupDto, @Req() req: CustomRequest) {
-    this.groupChatService.joinGroup(param.groupId, req.user.userId)
+    return this.groupChatService.joinGroup(param.groupId, req.user.userId)
   }
 
   @Get('my-group')

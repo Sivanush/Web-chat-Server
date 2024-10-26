@@ -61,17 +61,13 @@ export class GroupChatService {
       const existingMember = await this.groupMemberModel.findOne({ groupId, userId });
 
       if (existingMember) {
-        throw new ConflictException('User is already a member of this group');
+        throw new HttpException('User is already a member of this group', HttpStatus.INTERNAL_SERVER_ERROR);
       }
-
 
       const newMember = await this.groupMemberModel.create({ groupId, userId, role });
 
       return await newMember.save();
     } catch (error) {
-      if (error instanceof ConflictException) {
-        throw error;
-      }
       throw new HttpException(`Join Group failed: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
